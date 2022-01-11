@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Validator;
 class BannerController extends Controller
 {
     /**
@@ -38,19 +39,28 @@ class BannerController extends Controller
         $this->validate($request,[
 
             'title'=>'string|required',
-            'description'=>'stirng|nullable',
+            'description'=>'string|nullable',
             'photo'=>'required',
             'condition'=>'nullable|in:bannar,promote',
-            'status'=>'nullable|in:active,inactive'
+            'status'=>'nullable|in:active,inactive',
 
         ]);
 
         $data = $request->all();
+        $slug =Str::slug($request->input('title'));
+        $slug_count = Banner::where('slug',$slug)->count();
 
+        if($slug_count > 0){
+            $slug.=time().'-'.$slug;
+        }
+
+         $data['slug']=$slug;
+
+     
         $status = Banner::create($data);
 
         if($status){
-              return redirect()->route('banner.index')->with('success', 'Yeah Banner Added Success');
+              return redirect()->route('banner.index')->with('success', 'Yes! Banner Added Success');
         }
         else{
             return back()->with('error','Something is wrong please cheak and try again');
