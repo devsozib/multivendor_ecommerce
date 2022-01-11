@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Validator;
 class BannerController extends Controller
@@ -15,7 +16,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-    return view('backend.banners.index');
+    $banners = Banner::orderBy('id','DESC')->get();
+    return view('backend.banners.index',compact('banners'));
     }
 
     /**
@@ -66,7 +68,18 @@ class BannerController extends Controller
             return back()->with('error','Something is wrong please cheak and try again');
         }
     }
+     
 
+    public function bannerStatus(Request $request){
+         
+        if($request->mode=='true'){
+            DB::table('banners')->where('id',$request->id)->update(['status'=>'active']);
+        }
+        else{
+            DB::table('banners')->where('id',$request->id)->update(['status'=>'inactive']);
+        }
+        return response()->json(['message'=>'Status update success', 'status'=>true]);
+    } 
     /**
      * Display the specified resource.
      *

@@ -7,6 +7,7 @@
 <script src="{{ asset('backend/assets/vendor/toastr/toastr.js') }}"></script>
 <script src="{{ asset('backend/assets/bundles/datatablescripts.bundle.js') }}"></script>
 //Summernote
+<script src="{{ asset('backend/assets/js/bootstrap-switch-button.min.js') }}"></script>
 <script src="{{ asset('backend/assets/summernote-0.8.18-dist/summernote.js') }}"></script>
 <script src="{{ asset('backend/assets/buttons/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('backend/assets/vendor/jquery-datatable/buttons/buttons.bootstrap4.min.js') }}"></script>

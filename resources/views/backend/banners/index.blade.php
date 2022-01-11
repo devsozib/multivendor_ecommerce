@@ -31,33 +31,43 @@
                             <table class="table table-bordered table-hover js-basic-example dataTable table-custom">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>S.N</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Photo</th>
+                                        <th>Condition</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
+                             
                                 <tbody>
+                                    @foreach ($banners as $item)
                                     <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->title }}</td>
+                                        <td>{{ $item->description }}</td>
+                                        <td><img src="{{ $item->photo }}" style="max-width:120px; max-height:90px" alt=""></td>
+                                        <td>
+                                            @if ($item->condition=='banner')
+                                                <span class="badge badge-success">{{ $item->condition }}</span>
+                                                @else
+                                                <span class="badge badge-primary">{{ $item->condition }}</span>
+
+                                            @endif
+
+                                       
+                                        </td>
+                                        <td><input value="{{ $item->id }}" name="toggle" {{ $item->status=='active'? 'checked':''}} type="checkbox" data-size="small" data-toggle="switchbutton"  data-onlabel="Active" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger"></td>
+                                        <td>
+                                            <a href="" data-placement="bottom"  data-toggle="tooltip" title="edit" class="btn btn-sm btn-outline-warning" >
+                                                <i class="fas fa-edit"></i></a>
+
+                                                <a href="" data-placement="bottom" data-toggle="tooltip" title="delete" class="btn btn-sm btn-outline-danger" >
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                    
                                 </tbody>
                             </table>
@@ -74,11 +84,32 @@
 </div>
 
 
+@endsection
+@section('scripts')
+<script>
+    $('input[name=toggle]').change(function(){
+        var mode = $(this).prop('checked');
+        var id = $(this).val();
 
+        $.ajax({
+             url:"{{ route('banner.status') }}",
+             type:"POST",
+             data:{
+                 _token:'{{ csrf_token() }}',
+                 mode:mode,
+                 id:id,
+             },
 
+             success:function(response){
+                
+                if(response.status){
+                    alert(response.message);
+                }else{
+                    alert('please try again');
+                }
+             }
 
-
-
-
-
+        });
+    });
+</script>
 @endsection

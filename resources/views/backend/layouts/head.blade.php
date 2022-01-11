@@ -19,6 +19,8 @@
 
 <link rel="stylesheet" href="{{ asset('backend/assets/summernote-0.8.18-dist/summernote.css') }}">
 
+<link rel="stylesheet" href="{{ asset('css/bootstrap-switch-button.css') }}">
+
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/jquery-datatable/fixedeader/dataTables.fixedcolumns.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/jquery-datatable/fixedeader/dataTables.fixedheader.bootstrap4.min.css') }}">

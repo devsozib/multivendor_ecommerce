@@ -32,6 +32,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'],function(){
 
     //Banner Routes
     Route::resource('banner',BannerController::class);
+    Route::post('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
 
 
 });
