@@ -99,7 +99,14 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = Banner::find($id);
+
+        if($banner){
+            return view('backend.banners.edit',compact('banner'));
+        }
+        else{
+            return back()->with('error','Data not found');
+        }
     }
 
     /**
@@ -111,7 +118,24 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $banner = Banner::find($id);
+
+        if($banner){
+            $data = $request->all();
+          
+         
+            $status = $banner->fill($data)->save();
+    
+            if($status){
+                  return redirect()->route('banner.index')->with('success', 'Yes! Banner updated Success');
+            }
+            else{
+                return back()->with('error','Something is wrong please cheak and try again');
+            }
+        }
+        else{
+            return back()->with('error','Data not found');
+        } 
     }
 
     /**
@@ -122,6 +146,19 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::find($id);
+
+        if($banner){
+           $status = $banner->delete();
+           if($status){
+               return redirect()->route('banner.index')->with('success','Yes! Banner Deleted Successfull');
+           }
+           else{
+               return back()->with('error','Something is wrong');
+           }
+        }
+        else{
+            return back()->with('error','Data not found');
+        }
     }
 }

@@ -43,11 +43,8 @@
                 <nav id="left-sidebar-nav" class="sidebar-nav">
                     <ul id="main-menu" class="metismenu">                            
                         <li class="active">
-                            <a href="#Dashboard" class="has-arrow"><i class="icon-grid"></i> <span>Dashboard</span></a>
-                            <ul>
-                                <li><a href="index.html">Analytical</a></li>                                    
-
-                            </ul>
+                            <a href="{{ route('admin') }}" ><i class="icon-grid"></i> <span>Dashboard</span></a>
+                           
                         </li>
                         <li>
                             <a href="#App" class="has-arrow"><i class="icon-picture"></i> <span>Bannar Management</span></a>
