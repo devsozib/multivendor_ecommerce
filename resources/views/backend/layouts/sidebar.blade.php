@@ -58,7 +58,8 @@
                         <li>
                             <a href="#App" class="has-arrow"><i class="fas fa-sitemap"></i> <span>Category Mangement</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
+                                <li><a href="{{ route('category.index') }}">All Category</a></li>
+                                <li><a href="{{ route('category.create') }}">Add Category</a></li>
                                
                             </ul>
                         </li>

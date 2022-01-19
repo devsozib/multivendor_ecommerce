@@ -3,6 +3,12 @@
 
 <head>
 @include('backend.layouts.head')
+
+<style>
+    .icon-menu:before {
+    content: "";
+}
+</style>
 </head>
 <body class="theme-cyan">
     <!-- Page Loader -->
