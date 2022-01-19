@@ -56,7 +56,7 @@
                                             {{ $item->is_parent===1?'Yes':'No' }}
                                        
                                         </td>
-                                        <td>{{ $item->parent_id }}</td>
+                                        <td>{{ \App\Models\Category::where('id',$item->parent_id)->value('title') }}</td>
                                         <td><input value="{{ $item->id }}" name="toggle" {{ $item->status=='active'? 'checked':''}} type="checkbox" data-size="small" data-toggle="switchbutton"  data-onlabel="Active" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger"></td>
                                         <td>
                                             <a href="{{route('category.edit',$item->id)}}" data-placement="bottom"  data-toggle="tooltip" title="edit" class="float-left btn btn-sm btn-outline-warning" >

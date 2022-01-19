@@ -27,7 +27,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.categories.create');
+
+        $parent_categories = Category::where('is_parent',1)->orderBy('title','ASC')->get();
+        return view('backend.categories.create',compact('parent_categories'));
     }
 
     /**
@@ -43,7 +45,7 @@ class CategoryController extends Controller
             'title'=>'string|required',
             'summary'=>'string|nullable',
             'is_parent'=>'sometimes|in:1',
-            'parent_id'=>'nullable',
+            'parent_id'=>'nullable|exists:categories,id',
             'status'=>'nullable|in:active,inactive'
         ]);
 
@@ -56,6 +58,8 @@ class CategoryController extends Controller
         }
 
          $data['slug']=$slug;
+
+         $data['is_parent'] = $request->input('is_parent',0);
 
      
         $status = Category::create($data);
@@ -97,7 +101,15 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::find($id);
+        $parent_categories = Category::where('is_parent',1)->orderBy('title','ASC')->get();
+
+        if($categories){
+            return view('backend.categories.edit',compact(['categories','parent_categories']));
+        }
+        else{
+            return back()->with('error','Data not found');
+        }
     }
 
     /**
@@ -109,7 +121,39 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $categories = Category::find($id);
+           
+        if($categories){
+            $this->validate($request,[
+              
+                'title'=>'string|required',
+                'summary'=>'string|nullable',
+                'is_parent'=>'sometimes|in:1',
+                'parent_id'=>'nullable|exists:categories,id',
+                'status'=>'nullable|in:active,inactive'
+            ]);
+    
+            $data = $request->all();
+            
+                if($request->is_parent==1){
+                    $data['parent_id']=null;
+                }
+             $data['is_parent'] = $request->input('is_parent',0);
+    
+         
+            $status =$categories->fill($data)->save();
+    
+            if($status){
+                  return redirect()->route('category.index')->with('success', 'Yes! Category updated Success');
+            }
+            else{
+                return back()->with('error','Something is wrong please cheak and try again');
+            }
+        }
+        else{
+            return back()->with('error','Data not found');
+        }
     }
 
     /**
@@ -121,10 +165,13 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $categories = Category::find($id);
-
+          $child_cat_id = Category::where('parent_id',$id)->pluck('id');
         if($categories){
            $status = $categories->delete();
            if($status){
+               if(count($child_cat_id) >0){
+                   Category::shiftC($child_cat_id);
+               }
                return redirect()->route('category.index')->with('success','Yes! Category Deleted Successfull');
            }
            else{

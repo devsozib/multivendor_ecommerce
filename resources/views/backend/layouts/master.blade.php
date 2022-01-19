@@ -8,6 +8,9 @@
     .icon-menu:before {
     content: "";
 }
+#toast-container{
+    display: none;
+}
 </style>
 </head>
 <body class="theme-cyan">
