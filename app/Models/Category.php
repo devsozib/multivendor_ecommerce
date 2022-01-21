@@ -11,7 +11,7 @@ class Category extends Model
 
     protected $fillable = ['title','slug','photo','is_parent','summary','parent_id','status'];
 
-    public function shiftC($cat_id){
+    public static function shiftChild($cat_id){
         return Category::whereIn('id',$cat_id)->update(['is_parent'=>1]);
     }
 }

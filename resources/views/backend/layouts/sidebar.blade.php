@@ -63,6 +63,15 @@
                                
                             </ul>
                         </li>
+
+                        <li>
+                            <a href="#App" class="has-arrow"><i class="icon-handbag"></i> <span>Brand Mangement</span></a>
+                            <ul>
+                                <li><a href="{{ route('brand.index') }}">All Brand</a></li>
+                                <li><a href="{{ route('brand.create') }}">Add Brand</a></li>
+                               
+                            </ul>
+                        </li>
                         <li>
                             <a href="#App" class="has-arrow"><i class="icon-briefcase"></i> <span>Products Mangement</span></a>
                             <ul>

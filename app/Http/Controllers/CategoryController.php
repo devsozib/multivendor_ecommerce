@@ -170,7 +170,7 @@ class CategoryController extends Controller
            $status = $categories->delete();
            if($status){
                if(count($child_cat_id) >0){
-                   Category::shiftC($child_cat_id);
+                   Category::shiftChild($child_cat_id);
                }
                return redirect()->route('category.index')->with('success','Yes! Category Deleted Successfull');
            }
