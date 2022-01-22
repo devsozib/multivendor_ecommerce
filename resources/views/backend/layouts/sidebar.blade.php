@@ -4,7 +4,7 @@
             <img src="{{ asset('backend/assets/images/user.png') }}" class="rounded-circle user-photo" alt="User Profile Picture">
             <div class="dropdown">
                 <span>Welcome,</span>
-                <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>Alizee Thomas</strong></a>
+                <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong>{{{ Auth::user()->full_name }}}</strong></a>
                 <ul class="dropdown-menu dropdown-menu-right account">
                     <li><a href="page-profile2.html"><i class="icon-user"></i>My Profile</a></li>
                     <li><a href="app-inbox.html"><i class="icon-envelope-open"></i>Messages</a></li>
@@ -75,7 +75,8 @@
                         <li>
                             <a href="#App" class="has-arrow"><i class="icon-briefcase"></i> <span>Products Mangement</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
+                                <li><a href="{{ route('product.index') }}">All Product</a></li>
+                                <li><a href="{{ route('product.create') }}">Add Product</a></li>
                                
                             </ul>
                         </li>

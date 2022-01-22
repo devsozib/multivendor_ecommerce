@@ -6,7 +6,7 @@
             </div>
 
             <div class="navbar-brand">
-                <a href="index.html"><img src="{{ asset('backend/assets/images/logo.png') }}"></a>                
+                <a href="index.html" class="text-bold text-center text-info">BgHaat</a>                
             </div>
             
             <div class="navbar-right">

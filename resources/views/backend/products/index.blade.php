@@ -8,15 +8,15 @@
         <div class="block-header">
             <div class="row">
                 <div class="col-lg-12 col-md-8 col-sm-12">                        
-                    <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Banners
-                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('banner.create') }}"><i class="icon-plus"></i> Create Bannner</a>
+                    <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('product.create') }}"><i class="icon-plus"></i> Create Product</a>
                     </h2>
                     <ul class="breadcrumb float-left">
                         <li class="breadcrumb-item"><a href="{{ route('admin') }}"><i class="icon-home"></i></a></li>                            
-                        <li class="breadcrumb-item">Banner</li>
-                        <li class="breadcrumb-item active">All Banner</li>
+                        <li class="breadcrumb-item">Products</li>
+                        <li class="breadcrumb-item active">All Products</li>
                     </ul>
-                    <p class="float-right">Total Banners:{{ \App\Models\Banner::count() }}</p>
+                    <p class="float-right">Total Product:{{ \App\Models\Product::count() }}</p>
                 </div>            
               
             </div>
@@ -35,9 +35,11 @@
                                 <thead>
                                     <tr>
                                         <th>S.N</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
+                                        <th>Title</th>                                    
                                         <th>Photo</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>Size</th>
                                         <th>Condition</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -45,29 +47,42 @@
                                 </thead>
                              
                                 <tbody>
-                                    @foreach ($banners as $item)
+                                    @foreach ($products as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->title }}</td>
-                                        <td>{!! html_entity_decode ($item->description )!!}</td>
+                                     
                                         <td><img src="{{ $item->photo }}" style="max-width:120px; max-height:90px" alt=""></td>
+                                        <td>৳{{ $item->price }}</td>
                                         <td>
-                                            @if ($item->condition=='banner')
+                                            
+                                            {{ $item->discount }}%
+                                       
+                                        </td>
+                                        <td>
+                                            
+                                            {{ $item->size }}
+                                       
+                                        </td>
+                                     
+                                        <td>
+                                            @if ($item->condition=='new')
                                                 <span class="badge badge-success">{{ $item->condition }}</span>
+                                                @elseif($item->condition=='popular')
+                                                <span class="badge badge-warning">{{ $item->condition }}</span>
                                                 @else
                                                 <span class="badge badge-primary">{{ $item->condition }}</span>
-
                                             @endif
 
                                        
                                         </td>
-                               
                                         <td><input value="{{ $item->id }}" name="toggle" {{ $item->status=='active'? 'checked':''}} type="checkbox" data-size="small" data-toggle="switchbutton"  data-onlabel="Active" data-offlabel="Inactive" data-onstyle="success" data-offstyle="danger"></td>
+                               
                                         <td>
-                                            <a href="{{route('banner.edit',$item->id)}}" data-placement="bottom"  data-toggle="tooltip" title="edit" class="float-left btn btn-sm btn-outline-warning" >
+                                            <a href="{{route('category.edit',$item->id)}}" data-placement="bottom"  data-toggle="tooltip" title="edit" class="float-left btn btn-sm btn-outline-warning" >
                                                 <i class=" fas fa-edit"></i></a>
 
-                                            <form class="float-left ml-2" action="{{ route('banner.destroy',$item->id) }}" method="POST">
+                                            <form class="float-left ml-2" action="{{ route('category.destroy',$item->id) }}" method="POST">
                                                @csrf
                                                   @method('delete')
                                                   <a href="" data-id="{{ $item->id }}" data-placement="bottom" data-toggle="tooltip" title="delete" class="btn btn-sm btn-outline-danger" >
@@ -134,7 +149,7 @@ $('.dltBtn').click(function(e){
         var id = $(this).val();
 
         $.ajax({
-             url:"{{ route('banner.status') }}",
+             url:"{{ route('product.status') }}",
              type:"POST",
              data:{
                  _token:'{{ csrf_token() }}',
