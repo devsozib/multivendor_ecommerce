@@ -39,6 +39,6 @@ class LoginController extends Controller
     }
 
     public function credentials(Request $request){
-        return ['email'=>$request->email,'password'=>$request->password,'role'=>'admin','status'=>'active'];
+        return ['email'=>$request->email,'password'=>$request->password,'status'=>'active'];
     }
 }

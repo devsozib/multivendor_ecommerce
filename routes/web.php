@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -26,10 +27,15 @@ Route::get('/', function () {
 Auth::routes(['register'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Admin Login
 
+Route::prefix('admin')->group(function () {
+    Route::get('/login',[LoginController::class,'showLoginForm'])->name('admin.login.form');
+    Route::post('/login',[LoginController::class,'login'])->name('admin.login');
+});
 //Admin Dashboard
 
-Route::group(['prefix'=>'admin', 'middleware'=>'auth'],function(){
+Route::group(['prefix'=>'admin', 'middleware'=>'admin'],function(){
 
     Route::get('/',[AdminController::class,'admin'])->name('admin');
 

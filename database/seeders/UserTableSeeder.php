@@ -16,37 +16,36 @@ class UserTableSeeder extends Seeder
     public function run()
     {
          
-        DB::table('users')->insert([
-            //Admin
-
-            [
-                    'full_name'=>'Farabi Sajib',
-                    'username'=>'admin',
-                    'email'=>'admin@gmail.com',
-                    'password'=>Hash::make('111'),
-                    'role'=>'admin',
-                    'status'=>'active'
-            ],
-
-            //Vendor
-            [
-                    'full_name'=>'Farabi Sajib',
-                    'username'=>'vendor',
-                    'email'=>'vendor@gmail.com',
-                    'password'=>Hash::make('111'),
-                    'role'=>'vendor',
-                    'status'=>'active'
-            ],
-            
+        DB::table('users')->insert([  
             //Customer
             [
                     'full_name'=>'Farabi Sajib',
                     'username'=>'customer',
                     'email'=>'customer@gmail.com',
-                    'password'=>Hash::make('111'),
-                    'role'=>'customer',
+                    'password'=>Hash::make('1111'),
                     'status'=>'active'
             ],
             ]);
+             //Admin
+            DB::table('admins')->insert([  
+                //Customer
+                [
+                        'full_name'=>'Admin',
+                        'email'=>'admin@gmail.com',
+                        'password'=>Hash::make('1111'),
+                        'status'=>'active'
+                ],
+                ]);
+            //Seller
+
+            DB::table('sellers')->insert([  
+                //Customer
+                [
+                        'full_name'=>'Seller',
+                        'email'=>'sellers@gmail.com',
+                        'password'=>Hash::make('1111'),
+                        'status'=>'active'
+                ],
+                ]);
     }
 }
